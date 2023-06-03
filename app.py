@@ -25,9 +25,19 @@ query = st.text_input("Please enter your query:")
 if query:
     docs = new_db.similarity_search(query, k=3)  # k = 3; Return top 3 results
 
-    relevant_pages = [doc.metadata['page_number'] for doc in docs]
+    relevant_content_and_pages = [{"page_number":doc.metadata["page_number"],"content":doc.page_content} for doc in docs]
+    # relevant_pages = [doc.metadata['page_number'] for doc in docs]
 
-    st.write(f"Relevant Page numbers found are: {', '.join(map(str, relevant_pages))}")
+    st.write(f"Relevant Page numbers found are: {', '.join(map(str, [item['page_number'] for item in relevant_content_and_pages]))}")
+
+    with st.expander("View relevant chunks"):
+        # Iterate over the relevant_content_and_pages list
+        for item in relevant_content_and_pages:
+            page_number = item["page_number"]
+            content = item["content"]
+
+            st.write(f"Page number # {page_number}")
+            st.write(content)
 
     chain = load_qa_with_sources_chain(OpenAI(temperature=0, model_name=model_name, max_tokens=-1), chain_type=chain_type)  # -1 sets the limit to the best what is available with the current model
 
