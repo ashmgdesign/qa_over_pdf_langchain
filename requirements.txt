@@ -3,3 +3,4 @@ python-dotenv==1.0.0
 streamlit==1.21.0
 openai
 faiss-cpu
+tiktoken
