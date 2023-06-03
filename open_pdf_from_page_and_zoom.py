@@ -39,6 +39,7 @@ def display_pdf_with_zoom(pdf_filename, page_number, zoom_level):
         # Construct the URL with the zoom level and page number as raw literals
         url = rf"file://{pdf_path}#zoom={zoom_level}&page={page_number}"
 
+        print(url)
         # Open the URL in Chrome
         webbrowser.get('chrome').open_new(url)
     else:
