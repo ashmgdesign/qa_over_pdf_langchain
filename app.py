@@ -26,8 +26,7 @@ def create_response(matched_chunks, question):
     
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",
-        temperature=.1,
-        max_tokens=-1
+        temperature=.1
     )
 
     # You can assign the system a role here. You play around this prompt to see how the response changes.
@@ -88,4 +87,4 @@ if query:
     result = create_response(matched_chunks="\n".join([obj['content'] for obj in relevant_content_and_pages]),question=query)
     
 
-    st.write(f"Response: {result['output_text']}")
+    st.write(f"Response: {result}")
