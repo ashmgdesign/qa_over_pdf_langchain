@@ -69,7 +69,11 @@ query = st.text_input("Please enter your query:")
 if query:
     docs = new_db.similarity_search(query, k=3)  # k = 3; Return top 3 results
 
-    relevant_content_and_pages = [{"page_number":doc.metadata["page_number"],"content":doc.page_content} for doc in docs]
+    st.write(f"Metadata found out for the first object is: {docs[0].metadata}")
+    
+    relevant_content_and_pages = [{"page_number": doc.metadata.get("page_number", "N/A"), "content": doc.page_content} for doc in docs]
+
+    # relevant_content_and_pages = [{"page_number":doc.metadata["page_number"],"content":doc.page_content} for doc in docs]
     # relevant_pages = [doc.metadata['page_number'] for doc in docs]
 
     st.write(f"Relevant Page numbers found are: {', '.join(map(str, [item['page_number'] for item in relevant_content_and_pages]))}")
