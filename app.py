@@ -76,7 +76,7 @@ if query:
 
     for page in [item['page_number'] for item in relevant_content_and_pages]:
         display_pdf_with_zoom(pdf_filename="test.pdf",page_number=page,zoom_level=300)
-        st.write("opened page in PDF")
+    st.success("Opened relevant pages of PDF")
 
     with st.expander("View relevant chunks"):
         # Iterate over the relevant_content_and_pages list

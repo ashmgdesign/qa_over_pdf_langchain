@@ -41,7 +41,7 @@ def display_pdf_with_zoom(pdf_filename, page_number, zoom_level):
 
         print(url)
         # Open the URL in Chrome
-        webbrowser.get('chrome').open_new(url)
+        webbrowser.get('chrome').open(url)
     else:
         print("Chrome not found.")
 
