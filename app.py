@@ -99,50 +99,21 @@ import os
 import subprocess
 import streamlit as st
 
-def display_pdf_with_zoom(pdf_filename, page_number, zoom_level):
-    def get_chrome_path():
-        # Platform-specific commands to find Chrome executable
-        if os.name == 'nt':  # Windows
-            key_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe"
-            try:
-                import winreg
-                key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key_path, 0, winreg.KEY_READ)
-                value, _ = winreg.QueryValueEx(key, None)
-                return value
-            except ImportError:
-                pass
-
-        elif os.name == 'posix':  # macOS and Linux
-            try:
-                chrome_path = subprocess.check_output(['which', 'google-chrome'], text=True).strip()
-                return chrome_path
-            except subprocess.CalledProcessError:
-                pass
-
-        return None
-
-    # Get the installation path of Google Chrome
-    chrome_path = get_chrome_path()
-
-    if chrome_path:
-        # Get the current directory path
-        current_directory = os.getcwd()
-
-        # Construct the complete path to the PDF file
-        pdf_path = os.path.join(current_directory, pdf_filename)
-
-        # Construct the URL with the zoom level and page number as raw literals
-        url = rf"file://{pdf_path}#zoom={zoom_level}&page={page_number}"
-
-        st.write(url)
-        # Instead of opening the URL in Chrome, display it as a link in Streamlit
-        st.markdown(f"[Open PDF with Zoom Level {zoom_level} and Page {page_number}]({url})")
-    else:
-        st.write("Chrome not found.")
-
 # Usage example:
 pdf_filename = 'test.pdf'
 page_number = 23
 zoom_level = 50
 
-display_pdf_with_zoom(pdf_filename, page_number, zoom_level)
+# Get the current directory path
+current_directory = os.getcwd()
+
+# Construct the complete path to the PDF file
+pdf_path = os.path.join(current_directory, pdf_filename)
+
+# Construct the URL with the zoom level and page number as raw literals
+url = rf"file://{pdf_path}#zoom={zoom_level}&page={page_number}"
+
+st.write(url)
+# Instead of opening the URL in Chrome, display it as a link in Streamlit
+st.markdown(f"[Open PDF with Zoom Level {zoom_level} and Page {page_number}]({url})")
+
