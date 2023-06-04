@@ -45,4 +45,4 @@ def display_pdf_with_zoom(pdf_filename, page_number, zoom_level):
     else:
         print("Chrome not found.")
 
-display_pdf_with_zoom('test.pdf', 23, 50)
+# display_pdf_with_zoom('test.pdf', 23, 50)

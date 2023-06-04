@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import SystemMessagePromptTemplate, HumanMessagePromptTemplate, ChatPromptTemplate
-
+from open_pdf_from_page_and_zoom import display_pdf_with_zoom
 
 # Load environment variables from .env file
 load_dotenv()
@@ -63,6 +63,9 @@ st.title("PDF Search and QA App")
 
 query = st.text_input("Please enter your query:")
 
+# if st.button("press me"):
+#     display_pdf_with_zoom('test.pdf',13,200)
+
 if query:
     docs = new_db.similarity_search(query, k=3)  # k = 3; Return top 3 results
 
@@ -70,6 +73,9 @@ if query:
     # relevant_pages = [doc.metadata['page_number'] for doc in docs]
 
     st.write(f"Relevant Page numbers found are: {', '.join(map(str, [item['page_number'] for item in relevant_content_and_pages]))}")
+
+    for page in [item['page_number'] for item in relevant_content_and_pages]:
+        display_pdf_with_zoom(pdf_filename="test.pdf",page_number=page,zoom_level=300)
 
     with st.expander("View relevant chunks"):
         # Iterate over the relevant_content_and_pages list
@@ -86,5 +92,4 @@ if query:
 
     result = create_response(matched_chunks="\n".join([obj['content'] for obj in relevant_content_and_pages]),question=query)
     
-
     st.write(f"Response: {result}")
